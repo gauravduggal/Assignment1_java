@@ -12,18 +12,27 @@ public class student
      // System.out.println("Passed last Name is :" + last_name );
    subjects = new ArrayList<String>();
    }
+
+  public void update_from_file(String line)
+  {
+    String [] part = line.split(" ");
+    this.m_first_name(part[1]);
+    this.m_last_name(part[2]);
+    this.m_add_subjects(part,part.length);
+
+  } 
   public void m_first_name(String input)
   {
-  	first_name=input;
+  	this.first_name=input;
   }
   public void m_last_name(String input)
   {
-  	last_name=input;
+  	this.last_name=input;
   }
   public void m_add_subjects(String []a,int l)
   {
     for(int i=3;i<l;i++)
-      subjects.add(a[i]);
+      this.subjects.add(a[i]);
   }
 
    

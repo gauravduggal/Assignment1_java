@@ -1,32 +1,32 @@
 import java.util.*;  
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class assignment1
 {
-  static ArrayList<student> student_list = new ArrayList<student>();
   public assignment1() {
       // This constructor has one parameter, name.
      
    }
   
    public static void main(String []args) {
-      if(args.length==0)
-      {
-        System.out.println("usage is: java assignment1 firstname lastname");
-        System.exit(0);
-        //constructor doesn't have a return type
-        //constructor has same name as class name
-      }
+      
+      heap h = new heap();
+      String fileName = "/home/gd/IIITD/OOPD/codes/assignment1/data.txt";
+      try (Scanner scanner = new Scanner(new File(fileName))) {
 
-      student s1 = new student();
-        s1.m_first_name(args[1]);
-        switch(args[0])
+      while (scanner.hasNext()){
+        String line = scanner.nextLine();
+        //System.out.println(line);
+        String [] part = line.split(" ");
+        student s1 = new student();
+        switch(part[0])
         {
           case "INSERT":
-          s1.m_first_name(args[1]);
-          s1.m_last_name(args[2]);
-          s1.m_add_subjects(args,args.length);
-
+          s1.update_from_file(line);
           //insert at the last node
+          h.insert_student(s1);
           //heapify nlogn times
           break;
           case "MAXIMUM":
@@ -42,9 +42,17 @@ public class assignment1
           System.out.println("error");
           break;
         }
-      student_list.add(s1);
-      System.out.print(s1.first_name+" ");
-      System.out.println(s1.last_name);
-      System.out.println(s1.subjects);
+        
+       System.out.println(h.get_length_heap());
+      
+      }
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+        
+      //System.out.println(h.get_student(0).first_name);
+      
    }
 }
