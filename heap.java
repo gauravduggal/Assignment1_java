@@ -28,7 +28,14 @@ public class heap
     else
     return this.student_list.get(index);
    }
-   
+   void heapify_every_level()
+   {
+    if(this.length>=3)
+    {
+    for(int i=this.length/2-1;i>=0;i--)
+      heapify(i);
+    }
+   }
    int heapify(int i)
    {
     if (i>=length && i>0)
@@ -129,10 +136,11 @@ public class heap
           s1.update_from_file(line);
           //insert at the last node
           this.insert_student(s1);
-          //heapify(length-1);
-          //heapify nlogn times
+          //heapify
+         // heapify_every_level();
           break;
           case "MAXIMUM":
+          //System.out.println(this.student_list.get(0).first_name+" "+this.student_list.get(0).last_name);
           break;
           case "EXTRACT-MAX":
           break;
