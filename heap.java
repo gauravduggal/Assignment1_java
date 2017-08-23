@@ -23,39 +23,95 @@ public class heap
    }
   student  get_student(int index)
    {
+    if (index==-1)
+      return new student();
+    else
     return this.student_list.get(index);
    }
-   void heapify()
+   
+   int heapify(int i)
    {
-    int cur_index=length-1;
+    if (i>=length && i>0)
+      {
+        return 1;
+      }
+    int left_child_index = get_left_child(i);
+    int right_child_index = get_right_child(i);
+    int lexical_first = i;
     
+    //if root node then both left and right child will be -1
+      if(right_child_index==-1 && left_child_index == -1)
+        return 1;
+      if(compare_heap_indexes(left_child_index,lexical_first)>=0)
+      {
+        lexical_first = left_child_index; 
+      }
+      if(compare_heap_indexes(right_child_index,lexical_first)>=0)
+      {
+        lexical_first = right_child_index; 
+      }
+
+      if(lexical_first != i)
+      {
+        swap(i,lexical_first);
+        heapify(lexical_first);
+      }
+    return 0;
    }
 
-   student get_left_child(int i)
+   //if student i comes before student j then return 1 else return -1
+   int compare_heap_indexes(int i, int j)
+   {
+    if (get_student(i).cmp(get_student(j)) >= 0)
+    {
+      return 1;
+    }
+    else
+      return -1;
+   }
+
+  int swap(int i, int j)
+  {
+    //swapping not required
+    if (i== -1 | j== -1)
+      return 1;
+    student temp = get_student(i);
+    student_list.set(i,get_student(j));
+    student_list.set(j,temp);
+    return 1;
+  }
+   
+   int get_left_child(int i)
    {
     if ((2*i+1) < (this.length))
-      return this.student_list.get(2*i+1);
+      //return this.student_list.get(2*i+1);
+      return (2*i+1);
     else
-      return new student();
+      return -1;
    }
 
-   student get_right_child(int i)
+
+   int get_right_child(int i)
    {
     if ((2*i+2) < (this.length))
-      return this.student_list.get(2*i+2);
+      //return this.student_list.get(2*i+2);
+      return (2*i+2);
     else
-      return new student();
+      return -1;
    }
 
-   student get_parent(int i)
+   int get_parent(int i)
    {
     // System.out.println((i-1)/2);
     if (i%2==0 && ((i-2)/2>=0)&& i<length)
-      return this.student_list.get((i-2)/2);
+      //return this.student_list.get((i-2)/2);
+      return ((i-2)/2);
     else if(i%2==1 && ((i-1)/2>=0) && i<length)
-      return this.student_list.get((i-1)/2);  
+      //return this.student_list.get((i-1)/2); 
+      return  ((i-1)/2);
     else
-      return new student();
+      //return new student();
+      return -1;
    }
 
    void heap_file(String fileName)
@@ -73,6 +129,7 @@ public class heap
           s1.update_from_file(line);
           //insert at the last node
           this.insert_student(s1);
+          //heapify(length-1);
           //heapify nlogn times
           break;
           case "MAXIMUM":
@@ -82,13 +139,7 @@ public class heap
           case "DELETE":
           break;
           case "SHOW":
-          System.out.println("Current List");
-          for(int i=0;i<this.length;i++)
-          {
-            s1=this.student_list.get(i);
-            System.out.println((i)+". "+s1.first_name+" "+s1.last_name);
-          }
-          System.out.println();
+          this.show();
           break;
                    
           default:
@@ -106,7 +157,18 @@ public class heap
 
       
    }
-
+   void show()
+   {
+    student s1;
+    System.out.println("Current List");
+          for(int i=0;i<this.length;i++)
+          {
+            s1=this.student_list.get(i);
+            System.out.println((i)+". "+s1.first_name+" "+s1.last_name);
+          }
+          System.out.println();
+          
+   }
    int get_length_heap()
    {
     return length;

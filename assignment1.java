@@ -11,14 +11,18 @@ public class assignment1
       
       heap h = new heap();
       h.heap_file("/home/gd/IIITD/OOPD/codes/assignment1/data.txt");
-      
-      // System.out.println(h.get_right_child(4).first_name);
-      
+      //start from 2nd last row - i.e. atleast one node in this row has atleast one child
+      h.heapify(h.length/2-1);
+      h.show();     
+      h.heapify(h.length/2-1-1);
+      h.show();
+      h.heapify(h.length/2-1-1-1);
+      h.show();
       }
 
     
         
-      //System.out.println(h.get_student(0).first_name);
+ 
       
    
 }
