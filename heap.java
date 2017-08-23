@@ -30,7 +30,7 @@ public class heap
    }
    void heapify_every_level()
    {
-    if(this.length>=3)
+    if(this.length>=2)
     {
     for(int i=this.length/2-1;i>=0;i--)
       heapify(i);
@@ -38,7 +38,7 @@ public class heap
    }
    int heapify(int i)
    {
-    if (i>=length && i>0)
+    if (i>=length && i>=0)
       {
         return 1;
       }
@@ -49,15 +49,21 @@ public class heap
     //if root node then both left and right child will be -1
       if(right_child_index==-1 && left_child_index == -1)
         return 1;
+      if(left_child_index!= -1)
+      {
       if(compare_heap_indexes(left_child_index,lexical_first)>=0)
       {
         lexical_first = left_child_index; 
       }
+      }
+      if(right_child_index!= -1)
+      {
+      
       if(compare_heap_indexes(right_child_index,lexical_first)>=0)
       {
         lexical_first = right_child_index; 
       }
-
+      }
       if(lexical_first != i)
       {
         swap(i,lexical_first);
@@ -69,6 +75,7 @@ public class heap
    //if student i comes before student j then return 1 else return -1
    int compare_heap_indexes(int i, int j)
    {
+
     if (get_student(i).cmp(get_student(j)) >= 0)
     {
       return 1;
@@ -137,21 +144,28 @@ public class heap
           //insert at the last node
           this.insert_student(s1);
           //heapify
-         // heapify_every_level();
+          this.heapify_every_level();
           break;
           case "MAXIMUM":
-          //System.out.println(this.student_list.get(0).first_name+" "+this.student_list.get(0).last_name);
+          //this.heapify_every_level();
+          if (this.length>0)
+          System.out.println("MAXIMUM is "+this.student_list.get(0).first_name+" "+this.student_list.get(0).last_name);
+          else
+          System.out.println("STUDENT LIST IS EMPTY");
           break;
           case "EXTRACT-MAX":
+          this.extract_max();
           break;
           case "DELETE":
+          this.delete_name(part[1],part[2]);
           break;
           case "SHOW":
+         // this.heapify_every_level();
           this.show();
           break;
                    
           default:
-          System.out.println("error");
+          System.out.println("INCORRECT COMMAND");
           break;
         }
         
@@ -165,9 +179,53 @@ public class heap
 
       
    }
+   void delete_name(String firstname, String lastname)
+   {
+    student temp;
+    int del_index=0;
+    int flag_found=0;
+    for(int i=0;i<length;i++)
+    {
+      temp = this.get_student(i);
+      if(temp.first_name.compareTo(firstname)==0 && temp.last_name.compareTo(lastname)==0 )
+        {
+          del_index=i;
+          flag_found=1;
+          break;
+        }
+    }
+    if(flag_found==1)
+    {
+      for (int i=del_index;i<this.length-1;i++)
+      {
+        this.student_list.set(i,this.get_student(i+1));
+      }
+
+    this.length--;
+    this.heapify_every_level();
+    System.out.println("NAME: "+firstname+" "+lastname+" DELETED");
+    }
+    else
+      System.out.println("NAME: "+firstname+" "+lastname+" NOT FOUND");
+   }
+
+
+   void extract_max()
+   {
+    if (this.length>0)
+    {
+    for(int i=1;i<this.length;i++)
+      this.student_list.set(i-1,this.get_student(i));
+    this.length--;
+    this.heapify_every_level();
+    }
+    else
+      System.out.println("STUDENT LIST IS EMPTY");
+   }
    void show()
    {
     student s1;
+    System.out.println();
     System.out.println("Current List");
           for(int i=0;i<this.length;i++)
           {

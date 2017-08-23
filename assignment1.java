@@ -8,11 +8,15 @@ public class assignment1
    }
   
    public static void main(String []args) {
-      
+      if(args.length!=1)
+      {
+         System.out.println("usage \"assignment1 data.txt\"");
+         System.exit(0);
+      }
       heap h = new heap();
-      h.heap_file("/home/gd/IIITD/OOPD/codes/assignment1/data.txt");
-      h.heapify_every_level();
-      h.show();
+      h.heap_file(args[0]);
+     // h.heapify_every_level();
+     // h.show();
       }
 
     
