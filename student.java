@@ -34,7 +34,7 @@ public class student
     for(int i=3;i<l;i++)
       this.subjects.add(a[i]);
   }
-  //comparess this name with s name. if this is lexicographically before s then 1 is returned else -1. 
+  //comparess this name with s name. if "this" is lexicographically before "s" then 1 is returned else -1. 
   //0 is returned when both first name and last name are the same
   int cmp(student s)
    {
